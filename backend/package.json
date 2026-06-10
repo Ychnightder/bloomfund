@@ -8,7 +8,7 @@
 		"dev": "nodemon --exec ts-node multi-servers.ts",
 		"dev-c": "concurrently \"nodemon --exec ts-node multi-servers.ts\"  \"nodemon --exec ts-node Server/loadbalancer.ts\"",
 		"build": "tsc",
-		"start": "ts-node Server/loadbalancer.ts",
+		"start": "ts-node multi-servers.ts",
 		"startJs": "node dist/loadbalancer.js"
 	},
 	"dependencies": {
