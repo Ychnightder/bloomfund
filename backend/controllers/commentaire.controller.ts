@@ -6,7 +6,8 @@ import { CommentaireService } from '../services/Commentaire.service';
 export const CommentaireController = {
     async getCommentairesByProjetId(req: Request, res: Response) {
        try {
-        const projetId = parseInt(req.params.projetId, 10);
+        const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+		const projetId = parseInt(idParam, 10);
         const commentaires = await CommentaireService.getCommentairesByProjetId(projetId);
         return  res.json({ commentaires, success: true });
        } catch (error) {
@@ -26,7 +27,8 @@ export const CommentaireController = {
     }   ,
     async deleteCommentaire(req: Request, res: Response) {
         try {
-            const commentaireId = parseInt(req.params.id, 10);
+            const idParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+            const commentaireId = parseInt(idParam, 10);
             const success = await CommentaireService.deleteCommentaire(commentaireId);
             if (success) {
                 return res.json({ message: 'Commentaire supprimé', success: true });
