@@ -18,12 +18,15 @@ function createApp() {
 
 	app.use(
 		cors({
-			origin: process.env.FRONTEND_URL  || 'https://bloomfund-pxo4.vercel.app',
+			origin: process.env.FRONTEND_URL || 'https://bloomfund-pxo4.vercel.app',
 			credentials: true,
 			methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 			allowedHeaders: ['Content-Type', 'Authorization'],
+			optionsSuccessStatus: 200,
 		})
 	);	
+
+	app.options(/(.*)/, cors());
 	app.use(cookieParser());
 	app.use('/api/utilisateurs', userRoutes);
 	app.use('/api/categories', CategorieRouter);
