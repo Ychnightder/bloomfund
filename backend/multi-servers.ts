@@ -1,4 +1,5 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import userRoutes from './routes/Utilisateur.route';
@@ -13,14 +14,16 @@ import cookieParser from 'cookie-parser';
 
 function createApp() {
 	const app = express();
-	// app.set('trust proxy', 1);
 	app.use(express.json());
-	// app.use(
-	// 	cors({
-	// 		origin: process.env.FRONTEND_URL || '*',
-	// 		credentials: true,
-	// 	})
-	// );
+
+	app.use(
+		cors({
+			origin: process.env.FRONTEND_URL  || 'https://bloomfund-pxo4.vercel.app',
+			credentials: true,
+			methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+			allowedHeaders: ['Content-Type', 'Authorization'],
+		})
+	);	
 	app.use(cookieParser());
 	app.use('/api/utilisateurs', userRoutes);
 	app.use('/api/categories', CategorieRouter);
@@ -37,6 +40,10 @@ const ports = process.env.PORTS ? process.env.PORTS.split(',').map(Number) : [80
 
 ports.forEach(port => {
 	const app = createApp();
+
+	app.get('/', (_req, res) => {
+		return res.json({ message: 'Hello World!' });
+	});
 	app.listen(port, () => {
 		console.log(`-|Local: http://localhost:${port}/|-`);
 	});

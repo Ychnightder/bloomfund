@@ -33,3 +33,7 @@ backend/.env
 frontend/.env
 
 .env
+
+dist
+
+backend/dist
